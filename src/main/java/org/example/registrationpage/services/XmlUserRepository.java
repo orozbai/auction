@@ -31,23 +31,15 @@ public class XmlUserRepository implements UserRepository {
     @Override
     public UserEntity getUserById(Long id) {
         try {
-            // Step 1: Create a DocumentBuilderFactory
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            // Step 2: Create a DocumentBuilder
             DocumentBuilder builder = factory.newDocumentBuilder();
-            // Step 3: Parse the XML file
-            Document document = builder.parse(new File("src/main/resources/users.xml"));  // Replace with your XML file path
-            // Step 4: Normalize the document (optional but recommended)
+            Document document = builder.parse(new File("src/main/resources/users.xml"));
             document.getDocumentElement().normalize();
-            // Step 5: Get the root element
             Element root = document.getDocumentElement();
-            // Step 6: Find user elements
             NodeList userList = root.getElementsByTagName("user");
-            // Step 7: Iterate over user elements to find the one with matching id
             for (int i = 0; i < userList.getLength(); i++) {
                 Element userElement = (Element) userList.item(i);
                 String idStr = userElement.getElementsByTagName("id").item(0).getTextContent();
-                // Check if id element is not empty
                 if (idStr != null && !idStr.isEmpty()) {
                     Long userId = Long.parseLong(idStr);
                     if (userId.equals(id)) {
@@ -60,11 +52,9 @@ public class XmlUserRepository implements UserRepository {
                     }
                 }
             }
-            // If no user with the given id is found
             return null;
 
         } catch (ParserConfigurationException | IOException | SAXException e) {
-            e.printStackTrace(); // Handle exception as needed
             return null;
         }
     }
@@ -72,18 +62,15 @@ public class XmlUserRepository implements UserRepository {
     @Override
     public void saveUser(UserRegisterDto user) {
         try {
-            // Step 1: Create a DocumentBuilderFactory
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            // Step 2: Create a DocumentBuilder
             DocumentBuilder builder = factory.newDocumentBuilder();
-            // Step 3: Parse the existing XML file or create a new document if it doesn't exist
             Document document;
-            File xmlFile = new File("src/main/resources/users.xml");  // Replace with your XML file path
+            File xmlFile = new File("src/main/resources/users.xml");
             if (xmlFile.exists()) {
                 document = builder.parse(xmlFile);
             } else {
                 document = builder.newDocument();
-                Element rootElement = document.createElement("users"); // Root element for users if new file
+                Element rootElement = document.createElement("users");
                 document.appendChild(rootElement);
             }
             Document documen = builder.parse(new File("src/main/resources/users.xml"));
@@ -99,7 +86,6 @@ public class XmlUserRepository implements UserRepository {
                     maxId = currentId;
                 }
             }
-            // Step 4: Create user element and add attributes and child elements
             Element userElement = document.createElement("user");
 
             Element idElement = document.createElement("id");
@@ -128,10 +114,8 @@ public class XmlUserRepository implements UserRepository {
             roleElement.appendChild(document.createTextNode("ROLE_ADMIN"));
             userElement.appendChild(roleElement);
 
-            // Step 5: Append user element to the root element
             document.getDocumentElement().appendChild(userElement);
 
-            // Step 6: Write the updated document back to the XML file
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -141,52 +125,42 @@ public class XmlUserRepository implements UserRepository {
             transformer.transform(source, result);
 
         } catch (ParserConfigurationException | SAXException | IOException | TransformerException e) {
-            e.printStackTrace(); // Handle exception as needed
+            e.printStackTrace();
         }
     }
 
     @Override
     public void deleteUser(Long id) {
         try {
-            // Step 1: Create a DocumentBuilderFactory
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            // Step 2: Create a DocumentBuilder
             DocumentBuilder builder = factory.newDocumentBuilder();
-            // Step 3: Parse the XML file
-            Document document = builder.parse(new File("src/main/resources/users.xml"));  // Replace with your XML file path
-            // Step 4: Normalize the document (optional but recommended)
+            Document document = builder.parse(new File("src/main/resources/users.xml"));
             document.getDocumentElement().normalize();
-            // Step 5: Get the root element
             Element root = document.getDocumentElement();
-            // Step 6: Find user elements
             NodeList userList = root.getElementsByTagName("user");
-            // Step 7: Iterate over user elements to find the one with matching id
             for (int i = 0; i < userList.getLength(); i++) {
                 Element userElement = (Element) userList.item(i);
                 String idStr = userElement.getElementsByTagName("id").item(0).getTextContent();
 
-                // Check if id element is not empty
                 if (idStr != null && !idStr.isEmpty()) {
                     Long userId = Long.parseLong(idStr);
 
                     if (userId.equals(id)) {
-                        // Remove the user element from the parent node
                         root.removeChild(userElement);
 
-                        // Save the changes to the XML file
                         TransformerFactory transformerFactory = TransformerFactory.newInstance();
                         Transformer transformer = transformerFactory.newTransformer();
                         DOMSource source = new DOMSource(document);
                         StreamResult result = new StreamResult(new File("src/main/resources/users.xml"));  // Replace with your XML file path
                         transformer.transform(source, result);
 
-                        return;  // Exit after deleting the user
+                        return;
                     }
                 }
             }
 
         } catch (ParserConfigurationException | SAXException | IOException | TransformerException e) {
-            e.printStackTrace(); // Handle exception as needed
+            e.printStackTrace();
         }
     }
 
@@ -194,19 +168,12 @@ public class XmlUserRepository implements UserRepository {
     public List<UserEntity> getAllUsers() {
         List<UserEntity> users = new ArrayList<>();
         try {
-            // Step 1: Create a DocumentBuilderFactory
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            // Step 2: Create a DocumentBuilder
             DocumentBuilder builder = factory.newDocumentBuilder();
-            // Step 3: Parse the XML file
             Document document = builder.parse(new File("src/main/resources/users.xml"));  // Replace with your XML file path
-            // Step 4: Normalize the document (optional but recommended)
             document.getDocumentElement().normalize();
-            // Step 5: Get the root element
             Element root = document.getDocumentElement();
-            // Step 6: Find user elements
             NodeList userList = root.getElementsByTagName("user");
-            // Step 7: Iterate over user elements to extract data
             for (int i = 0; i < userList.getLength(); i++) {
                 Element userElement = (Element) userList.item(i);
                 // Extract user data
@@ -216,12 +183,11 @@ public class XmlUserRepository implements UserRepository {
                 String role = userElement.getElementsByTagName("role").item(0).getTextContent();
                 Integer age = Integer.valueOf(userElement.getElementsByTagName("age").item(0).getTextContent());
                 Long id = Long.valueOf(userElement.getElementsByTagName("id").item(0).getTextContent());
-                // Assuming UserEntity constructor takes username and email as parameters
                 UserEntity user = new UserEntity(id, username, age, password, email, role);
                 users.add(user);
             }
         } catch (ParserConfigurationException | SAXException | IOException e) {
-            e.printStackTrace(); // Handle exception as needed
+            e.printStackTrace();
         }
 
         return users;
@@ -230,24 +196,16 @@ public class XmlUserRepository implements UserRepository {
     @Override
     public Optional<UserEntity> findByName(String username) {
         try {
-            // Step 1: Create a DocumentBuilderFactory
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            // Step 2: Create a DocumentBuilder
             DocumentBuilder builder = factory.newDocumentBuilder();
-            // Step 3: Parse the XML file
-            Document document = builder.parse(new File("src/main/resources/users.xml"));  // Replace with your XML file path
-            // Step 4: Normalize the document (optional but recommended)
+            Document document = builder.parse(new File("src/main/resources/users.xml"));
             document.getDocumentElement().normalize();
-            // Step 5: Get the root element
             Element root = document.getDocumentElement();
-            // Step 6: Find user elements
             NodeList userList = root.getElementsByTagName("user");
-            // Step 7: Iterate over user elements to find the one with matching id
             for (int i = 0; i < userList.getLength(); i++) {
                 Element userElement = (Element) userList.item(i);
                 String nameId = userElement.getElementsByTagName("username").item(0).getTextContent();
                 if (nameId.equals(username)) {
-                    // Found the user with the given id, extract data
                     String name = userElement.getElementsByTagName("username").item(0).getTextContent();
                     String email = userElement.getElementsByTagName("email").item(0).getTextContent();
                     String password = userElement.getElementsByTagName("password").item(0).getTextContent();
@@ -255,14 +213,12 @@ public class XmlUserRepository implements UserRepository {
                     Integer age = Integer.valueOf(userElement.getElementsByTagName("age").item(0).getTextContent());
                     Long id = (long) Integer.parseInt(userElement.getElementsByTagName("id").item(0).getTextContent());
 
-                    // Assuming UserEntity constructor takes username and email as parameters
                     return Optional.of(new UserEntity(id, name, age, password, email, role));
                 }
             }
-            // If no user with the given id is found
             return Optional.empty();
         } catch (ParserConfigurationException | IOException | SAXException e) {
-            e.printStackTrace(); // Handle exception as needed
+            e.printStackTrace();
             return Optional.empty();
         }
     }
@@ -270,23 +226,15 @@ public class XmlUserRepository implements UserRepository {
     @Override
     public void updateUserById(UserRegisterDto updatedUser) {
         try {
-            // Step 1: Create a DocumentBuilderFactory
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            // Step 2: Create a DocumentBuilder
             DocumentBuilder builder = factory.newDocumentBuilder();
-            // Step 3: Parse the XML file
-            Document document = builder.parse(new File("src/main/resources/users.xml"));  // Replace with your XML file path
-            // Step 4: Normalize the document (optional but recommended)
+            Document document = builder.parse(new File("src/main/resources/users.xml"));
             document.getDocumentElement().normalize();
-            // Step 5: Get the root element
             Element root = document.getDocumentElement();
-            // Step 6: Find user elements
             NodeList userList = root.getElementsByTagName("user");
-            // Step 7: Iterate over user elements to find the one with matching id
             for (int i = 0; i < userList.getLength(); i++) {
                 Element userElement = (Element) userList.item(i);
                 String idStr = userElement.getElementsByTagName("id").item(0).getTextContent();
-                // Check if id element is not empty
                 if (idStr != null && !idStr.isEmpty()) {
                     Long userId = Long.parseLong(idStr);
                     if (userId.equals(updatedUser.getId())) {
@@ -299,7 +247,7 @@ public class XmlUserRepository implements UserRepository {
                 }
             }
         } catch (ParserConfigurationException | IOException | SAXException e) {
-            e.printStackTrace(); // Handle exception as needed
+            e.printStackTrace();
         }
     }
 }
