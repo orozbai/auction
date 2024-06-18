@@ -9,7 +9,8 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <a class="navbar-brand" href="/auc/admins">Register User</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -21,15 +22,159 @@
                     <a class="nav-link" href="/auc/welcome">Auction</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="/auc/register-lot">Add-lots</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="/logout">Exit</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
-<div class="container">
 
+<div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">price</th>
+            <th scope="col">more</th>
+            <th scope="col">delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="lot : ${lots}">
+            <td th:text="${lot.id}"></td>
+            <td th:text="${lot.name}"></td>
+            <td th:text="${lot.price}"></td>
+            <td>
+                <button type="button" class="btn btn-primary"
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                        onclick="submitFormModal(this)">
+                    more
+                </button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-primary"
+                        onclick="deleteUser(this)">
+                    delete lot
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="edit-form">
+                        <input type="hidden" id="csrfToken" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <input type="hidden" id="id" name="id" value="">
+                        <p>Name</p>
+                        <label>
+                            <input type="text" name="name" id="name" value="" required>
+                        </label>
+                        <p>Description</p>
+                        <label>
+                            <input type="text" name="description" id="description" value="" required>
+                        </label>
+                        <p>Quantity</p>
+                        <label>
+                            <input type="number" name="quantity" id="quantity" value="" required>
+                        </label>
+                        <p>Price</p>
+                        <label>
+                            <input type="number" name="price" id="price" value="" required>
+                        </label>
+                        <button type="button" onclick="submitFormEdit()">Save</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<script>
+    function submitFormModal(button) {
+        const id = button.parentElement.parentElement.querySelector("td:first-child").innerText;
+        const token = document.getElementById("csrfToken").value
+        fetch(`/auc/get-lot-by-id/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                "X-CSRF-TOKEN": token
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to get user by ID');
+                }
+                return response.json();
+            })
+            .then(lot => {
+                const id = document.getElementById("id");
+                id.value = lot.id;
+                const name = document.getElementById("name");
+                name.value = lot.name;
+                const description = document.getElementById("description");
+                description.value = lot.description;
+                const quantity = document.getElementById("quantity");
+                quantity.value = lot.quantity;
+                const price = document.getElementById("price");
+                price.value = lot.price;
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+
+    function submitFormEdit() {
+        const form = document.getElementById("edit-form");
+        const formData = {
+            name: form.name.value,
+            description: form.description.value,
+            quantity: form.quantity.value,
+            price: form.price.value,
+            id: form.id.value
+        };
+
+        const token = document.getElementById("csrfToken").value
+        fetch("/auc/update-lot", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": token
+            },
+            body: JSON.stringify(formData)
+        })
+            .catch(error => console.error("Error:", error));
+        alert("LOT UPDATED")
+        window.location.href = "/auc/welcome";
+    }
+
+    function deleteUser(button) {
+        const id = button.parentElement.parentElement.querySelector("td:first-child").innerText;
+        const token = document.getElementById("csrfToken").value
+        fetch(`/auc/delete-lot-by-id/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                "X-CSRF-TOKEN": token
+            }
+        })
+        alert("LOT IS DELETED")
+        window.location.href = "/auc/welcome";
+    }
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

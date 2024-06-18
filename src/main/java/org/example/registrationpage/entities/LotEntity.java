@@ -2,26 +2,18 @@ package org.example.registrationpage.entities;
 
 import lombok.*;
 
-//@Entity
-//@Table(name = "lot", schema = "public", catalog = "postgres")
+import java.util.Objects;
+
 @Builder(toBuilder = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class LotEntity {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "id", nullable = false)
     private Long id;
-//    @Basic
-//    @Column(name = "name", nullable = true, length = 70)
     private String name;
-//    @Basic
-//    @Column(name = "description", nullable = true, length = 300)
     private String description;
-//    @Basic
-//    @Column(name = "quantity", nullable = true)
-    private int quantity;
+    private Integer quantity;
+    private Integer price;
 
     @Override
     public boolean equals(Object o) {
@@ -30,13 +22,10 @@ public class LotEntity {
 
         LotEntity lotEntity = (LotEntity) o;
 
-        if (quantity != lotEntity.quantity) return false;
-        if (id != null ? !id.equals(lotEntity.id) : lotEntity.id != null) return false;
-        if (name != null ? !name.equals(lotEntity.name) : lotEntity.name != null) return false;
-        if (description != null ? !description.equals(lotEntity.description) : lotEntity.description != null)
-            return false;
-
-        return true;
+        if (!Objects.equals(quantity, lotEntity.quantity)) return false;
+        if (!Objects.equals(id, lotEntity.id)) return false;
+        if (!Objects.equals(name, lotEntity.name)) return false;
+        return Objects.equals(description, lotEntity.description);
     }
 
     @Override

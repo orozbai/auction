@@ -7,10 +7,6 @@ import org.example.registrationpage.entities.UserEntity;
 import java.util.List;
 import java.util.Optional;
 
-//public interface UserRepository extends JpaRepository<UserEntity, Long> {
-//
-//    Optional<UserEntity> findByName(String username);
-//}
 public interface UserRepository {
     UserEntity getUserById(Long id);
     void saveUser(UserRegisterDto user);

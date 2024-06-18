@@ -3,8 +3,11 @@ package org.example.registrationpage.controllers;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import org.example.registrationpage.dtos.LotRegisterDto;
 import org.example.registrationpage.dtos.UserRegisterDto;
+import org.example.registrationpage.entities.LotEntity;
 import org.example.registrationpage.entities.UserEntity;
+import org.example.registrationpage.services.LotService;
 import org.example.registrationpage.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +24,13 @@ import java.util.List;
 public class RegistrationController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private LotService lotService;
+
+    @GetMapping("/")
+    public ModelAndView redirectUrl() {
+        return new ModelAndView("redirect:/auc/welcome");
+    }
 
     @GetMapping("/register")
     public ModelAndView getRegister() {
@@ -46,7 +56,9 @@ public class RegistrationController {
     }
 
     @GetMapping("/auc/welcome")
-    public ModelAndView welcome() {
+    public ModelAndView welcome(Model model) {
+        List<LotEntity> lots = lotService.getAllLots();
+        model.addAttribute("lots", lots);
         return new ModelAndView("welcome");
     }
 
@@ -64,4 +76,14 @@ public class RegistrationController {
         return new ModelAndView("admins");
     }
 
+    @GetMapping("/auc/register-lot")
+    public ModelAndView getRegisterLot() {
+        return new ModelAndView("lotAdd");
+    }
+
+    @PostMapping("/auc/register-lot")
+    public ModelAndView registerLot(@RequestBody LotRegisterDto lotRegisterDto) {
+        lotService.save(lotRegisterDto);
+        return new ModelAndView("redirect:/auc/welcome");
+    }
 }

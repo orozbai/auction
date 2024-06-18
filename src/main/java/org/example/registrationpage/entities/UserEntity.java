@@ -3,15 +3,11 @@ package org.example.registrationpage.entities;
 
 import lombok.*;
 
-//@Entity
-//@Table(name = "users")
 @Builder(toBuilder = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserEntity {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private Integer age;

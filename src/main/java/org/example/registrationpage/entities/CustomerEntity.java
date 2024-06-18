@@ -5,19 +5,10 @@ import lombok.Data;
 
 import java.util.Objects;
 
-//@Entity
 @Data
-//@Table(name = "customer", schema = "public", catalog = "postgres")
 public class CustomerEntity {
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Id
-//    @Column(name = "id", nullable = false)
     private int id;
-//    @Basic
-//    @Column(name = "lot_id", nullable = true)
     private Integer lotId;
-//    @Basic
-//    @Column(name = "user_id", nullable = true)
     private Integer userId;
 
     @Override
@@ -29,9 +20,7 @@ public class CustomerEntity {
 
         if (id != that.id) return false;
         if (!Objects.equals(lotId, that.lotId)) return false;
-        if (!Objects.equals(userId, that.userId)) return false;
-
-        return true;
+        return Objects.equals(userId, that.userId);
     }
 
     @Override
