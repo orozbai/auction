@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Register</title>
+</head>
+<body>
+<h2>Register Form</h2>
+<form id="registrationForm">
+    <input type="hidden" id="csrfToken" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    <div>
+        <label for="name">Имя:</label>
+        <input type="text" id="name" name="name" required>
+    </div>
+    <div>
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" name="password" required>
+    </div>
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+    </div>
+    <div>
+        <label for="age">Возраст:</label>
+        <input type="number" id="age" name="age" >
+    </div>
+    <div>
+        <button type="button" onclick="submitForm()">Зарегистрироваться</button>
+    </div>
+</form>
+
+<script>
+    function submitForm() {
+        const form = document.getElementById("registrationForm");
+        const formData = {
+            name: form.name.value,
+            password: form.password.value,
+            email: form.email.value,
+            age: form.age.value
+        };
+        const token = document.getElementById("csrfToken").value
+        fetch("/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": token
+            },
+            body: JSON.stringify(formData)
+        })
+            .catch(error => console.error("Error:", error));
+    }
+</script>
+</body>
+</html>
