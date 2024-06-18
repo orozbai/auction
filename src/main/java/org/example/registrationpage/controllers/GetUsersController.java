@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -31,9 +30,9 @@ public class GetUsersController {
 
     @GetMapping("/auc/get-user-by-id/{userid}")
     private UserEntity getUser(@PathVariable Long userid, Model model) {
-        Optional<UserEntity> user = userService.getUser(userid);
+        UserEntity user = userService.getUser(userid);
         model.addAttribute("user", user);
-        return userService.getUser(userid).get();
+        return user;
     }
 
     @DeleteMapping("/auc/delete-user-by-id/{userid}")

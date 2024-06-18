@@ -1,17 +1,17 @@
 package org.example.registrationpage.entities;
 
-import jakarta.persistence.*;
+
 import lombok.*;
 
-@Entity
-@Table(name = "users")
+//@Entity
+//@Table(name = "users")
 @Builder(toBuilder = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private Integer age;

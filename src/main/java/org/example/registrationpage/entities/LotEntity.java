@@ -1,27 +1,26 @@
 package org.example.registrationpage.entities;
 
-import jakarta.persistence.*;
 import lombok.*;
 
-@Entity
-@Table(name = "lot", schema = "public", catalog = "postgres")
+//@Entity
+//@Table(name = "lot", schema = "public", catalog = "postgres")
 @Builder(toBuilder = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class LotEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "id", nullable = false)
     private Long id;
-    @Basic
-    @Column(name = "name", nullable = true, length = 70)
+//    @Basic
+//    @Column(name = "name", nullable = true, length = 70)
     private String name;
-    @Basic
-    @Column(name = "description", nullable = true, length = 300)
+//    @Basic
+//    @Column(name = "description", nullable = true, length = 300)
     private String description;
-    @Basic
-    @Column(name = "quantity", nullable = true)
+//    @Basic
+//    @Column(name = "quantity", nullable = true)
     private int quantity;
 
     @Override

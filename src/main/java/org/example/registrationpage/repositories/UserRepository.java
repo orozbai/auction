@@ -1,11 +1,22 @@
 package org.example.registrationpage.repositories;
 
+import org.example.registrationpage.dtos.UserRegisterDto;
 import org.example.registrationpage.entities.UserEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
 
+
+import java.util.List;
 import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<UserEntity, Long> {
+//public interface UserRepository extends JpaRepository<UserEntity, Long> {
+//
+//    Optional<UserEntity> findByName(String username);
+//}
+public interface UserRepository {
+    UserEntity getUserById(Long id);
+    void saveUser(UserRegisterDto user);
+    void deleteUser(Long id);
+    List<UserEntity> getAllUsers();
 
     Optional<UserEntity> findByName(String username);
 }
+

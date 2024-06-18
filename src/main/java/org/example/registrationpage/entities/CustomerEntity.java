@@ -1,23 +1,23 @@
 package org.example.registrationpage.entities;
 
-import jakarta.persistence.*;
+
 import lombok.Data;
 
 import java.util.Objects;
 
-@Entity
+//@Entity
 @Data
-@Table(name = "customer", schema = "public", catalog = "postgres")
+//@Table(name = "customer", schema = "public", catalog = "postgres")
 public class CustomerEntity {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column(name = "id", nullable = false)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Id
+//    @Column(name = "id", nullable = false)
     private int id;
-    @Basic
-    @Column(name = "lot_id", nullable = true)
+//    @Basic
+//    @Column(name = "lot_id", nullable = true)
     private Integer lotId;
-    @Basic
-    @Column(name = "user_id", nullable = true)
+//    @Basic
+//    @Column(name = "user_id", nullable = true)
     private Integer userId;
 
     @Override
