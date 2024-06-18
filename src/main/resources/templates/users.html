@@ -8,7 +8,7 @@
 <body>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/admins">Register User</a>
+        <a class="navbar-brand" href="/auc/admins">Register User</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -16,10 +16,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/users">Editing User</a>
+                    <a class="nav-link active" aria-current="page" href="/auc/users">Editing User</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/welcome">Auction</a>
+                    <a class="nav-link" href="/auc/welcome">Auction</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Exit</a>
@@ -36,6 +36,7 @@
             <th scope="col">Name</th>
             <th scope="col">email</th>
             <th scope="col">editing</th>
+            <th scope="col">delete</th>
         </tr>
         </thead>
         <tbody>
@@ -44,46 +45,17 @@
             <td th:text="${user.name}"></td>
             <td th:text="${user.email}"></td>
             <td>
-                <button onclick="submitFormModal(${user.id})" type="button" class="btn btn-primary"
+                <button type="button" class="btn btn-primary"
                         data-bs-toggle="modal"
-                        data-bs-target="#exampleModal">
+                        data-bs-target="#exampleModal"
+                        onclick="submitFormModal(this)">
                     edit
                 </button>
             </td>
-        </tr>
-        <tr th:each="user : ${users}">
-            <td th:text="${user.id}"></td>
-            <td th:text="${user.name}"></td>
-            <td th:text="${user.email}"></td>
             <td>
-                <button onclick="submitFormModal(${user.id})" type="button" class="btn btn-primary"
-                        data-bs-toggle="modal"
-                        data-bs-target="#exampleModal">
-                    edit
-                </button>
-            </td>
-        </tr>
-        <tr th:each="user : ${users}">
-            <td th:text="${user.id}"></td>
-            <td th:text="${user.name}"></td>
-            <td th:text="${user.email}"></td>
-            <td>
-                <button onclick="submitFormModal(${user.id})" type="button" class="btn btn-primary"
-                        data-bs-toggle="modal"
-                        data-bs-target="#exampleModal">
-                    edit
-                </button>
-            </td>
-        </tr>
-        <tr th:each="user : ${users}">
-            <td th:text="${user.id}"></td>
-            <td th:text="${user.name}"></td>
-            <td th:text="${user.email}"></td>
-            <td>
-                <button onclick="submitFormModal(${user.id})" type="button" class="btn btn-primary"
-                        data-bs-toggle="modal"
-                        data-bs-target="#exampleModal">
-                    edit
+                <button type="button" class="btn btn-primary"
+                        onclick="deleteUser(this)">
+                    delete user
                 </button>
             </td>
         </tr>
@@ -99,15 +71,15 @@
                 </div>
                 <div class="modal-body">
                     <form id="edit-form">
-                        <input type="hidden" id="csrfToken" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                        <input type="hidden" id="csrfToken" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                         <label>
-                            <input type="text" name="name" id="name" value="th:text=${user.name}" required>
+                            <input type="text" name="name" id="name" value="" required>
                         </label>
                         <label>
-                            <input type="email" name="email" id="email" value="th:text=${user.email}" required>
+                            <input type="email" name="email" id="email" value="" required>
                         </label>
                         <label>
-                            <input type="number" name="age" id="age" value="th:text=${user.age}" required>
+                            <input type="number" name="age" id="age" value="" required>
                         </label>
                         <button type="button" onclick="submitFormEdit()">Save</button>
                     </form>
@@ -120,8 +92,16 @@
     </div>
 </div>
 <script>
-    function submitFormModal(id) {
-        fetch(`get-user-by-id=${id}`)
+    function submitFormModal(button) {
+        const id = button.parentElement.parentElement.querySelector("td:first-child").innerText;
+        const token = document.getElementById("csrfToken").value
+        fetch(`get-user-by-id/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                "X-CSRF-TOKEN": token
+            }
+        })
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Failed to get user by ID');
@@ -159,6 +139,19 @@
             body: JSON.stringify(formData)
         })
             .catch(error => console.error("Error:", error));
+    }
+
+    function deleteUser(button) {
+        const id = button.parentElement.parentElement.querySelector("td:first-child").innerText;
+        const token = document.getElementById("csrfToken").value
+        fetch(`/auc/delete-user-by-id/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                "X-CSRF-TOKEN": token
+            }
+        })
+        window.location.href = "/auc/users";
     }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

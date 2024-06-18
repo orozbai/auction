@@ -23,7 +23,7 @@ public class UserService {
                 .email(registerDto.getEmail())
                 .name(registerDto.getName())
                 .password(encodedPassword)
-                .role("admin")
+                .role("ROLE_ADMIN")
                 .build());
     }
 

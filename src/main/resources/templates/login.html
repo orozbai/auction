@@ -58,6 +58,7 @@
 <div style="text-align: center;"><h1> Auction Login Form </h1></div>
 <form action="/login" method="post">
     <div class="container">
+        <input type="hidden" id="csrfToken" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         <label>Username : </label>
         <label>
             <input type="text" placeholder="Enter Username" name="username" required>

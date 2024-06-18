@@ -28,20 +28,16 @@ public class GetUsersController {
             return new ResponseEntity<>("User registration failed", HttpStatus.BAD_REQUEST);
         }
     }
-    @GetMapping("get-user-by-id")
-    @ResponseBody
-    private Optional<UserEntity> getUser(@RequestParam Long id, Model model) {
-        Optional<UserEntity> user = userService.getUser(id);
+
+    @GetMapping("/auc/get-user-by-id/{userid}")
+    private UserEntity getUser(@PathVariable Long userid, Model model) {
+        Optional<UserEntity> user = userService.getUser(userid);
         model.addAttribute("user", user);
-        if (user.isPresent()) {
-            return userService.getUser(id);
-        }
-        return Optional.empty();
+        return userService.getUser(userid).get();
     }
 
-    @PostMapping("delete-user-by-id")
-    @ResponseBody
-    private void deleteUser (@RequestParam Long id) {
-        userService.deleteUserById(id);
+    @DeleteMapping("/auc/delete-user-by-id/{userid}")
+    private void deleteUser(@PathVariable Long userid) {
+        userService.deleteUserById(userid);
     }
 }

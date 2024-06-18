@@ -4,12 +4,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.example.registrationpage.dtos.UserRegisterDto;
+import org.example.registrationpage.entities.UserEntity;
 import org.example.registrationpage.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -40,17 +45,21 @@ public class RegistrationController {
         return "redirect:/login";
     }
 
-    @GetMapping("/welcome")
+    @GetMapping("/auc/welcome")
     public ModelAndView welcome() {
         return new ModelAndView("welcome");
     }
 
-    @GetMapping("/users")
-    public ModelAndView pageForUsers() {
+    @GetMapping("/auc/users")
+    public ModelAndView pageForUsers(Model model, HttpServletRequest request) {
+        CsrfToken csrfToken = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
+        model.addAttribute("_csrf", csrfToken);
+        List<UserEntity> users = userService.getAllUsers();
+        model.addAttribute("users", users);
         return new ModelAndView("users");
     }
 
-    @GetMapping("/admins")
+    @GetMapping("/auc/admins")
     public ModelAndView pageForAdmins() {
         return new ModelAndView("admins");
     }
