@@ -28,4 +28,8 @@ public class UserService {
     public void deleteUserById(Long id) {
         userRepository.deleteUser(id);
     }
+
+    public void updateUser(UserRegisterDto updatedUser) {
+        userRepository.updateUserById(updatedUser);
+    }
 }

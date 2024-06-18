@@ -266,4 +266,40 @@ public class XmlUserRepository implements UserRepository {
             return Optional.empty();
         }
     }
+
+    @Override
+    public void updateUserById(UserRegisterDto updatedUser) {
+        try {
+            // Step 1: Create a DocumentBuilderFactory
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            // Step 2: Create a DocumentBuilder
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            // Step 3: Parse the XML file
+            Document document = builder.parse(new File("src/main/resources/users.xml"));  // Replace with your XML file path
+            // Step 4: Normalize the document (optional but recommended)
+            document.getDocumentElement().normalize();
+            // Step 5: Get the root element
+            Element root = document.getDocumentElement();
+            // Step 6: Find user elements
+            NodeList userList = root.getElementsByTagName("user");
+            // Step 7: Iterate over user elements to find the one with matching id
+            for (int i = 0; i < userList.getLength(); i++) {
+                Element userElement = (Element) userList.item(i);
+                String idStr = userElement.getElementsByTagName("id").item(0).getTextContent();
+                // Check if id element is not empty
+                if (idStr != null && !idStr.isEmpty()) {
+                    Long userId = Long.parseLong(idStr);
+                    if (userId.equals(updatedUser.getId())) {
+                        String password = userElement.getElementsByTagName("password").item(0).getTextContent();
+                        UserRegisterDto newUser = new UserRegisterDto(updatedUser.getName(), updatedUser.getAge(),
+                                password, updatedUser.getEmail(), updatedUser.getId());
+                        deleteUser(updatedUser.getId());
+                        saveUser(newUser);
+                    }
+                }
+            }
+        } catch (ParserConfigurationException | IOException | SAXException e) {
+            e.printStackTrace(); // Handle exception as needed
+        }
+    }
 }

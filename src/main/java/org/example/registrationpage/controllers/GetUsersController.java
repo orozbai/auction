@@ -1,6 +1,7 @@
 package org.example.registrationpage.controllers;
 
 import lombok.AllArgsConstructor;
+import org.example.registrationpage.dtos.UserRegisterDto;
 import org.example.registrationpage.entities.UserEntity;
 import org.example.registrationpage.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,4 +40,10 @@ public class GetUsersController {
     private void deleteUser(@PathVariable Long userid) {
         userService.deleteUserById(userid);
     }
+
+    @PostMapping("/auc/update-user")
+    private void updateUser(@RequestBody UserRegisterDto updatedUser) {
+        userService.updateUser(updatedUser);
+    }
+
 }

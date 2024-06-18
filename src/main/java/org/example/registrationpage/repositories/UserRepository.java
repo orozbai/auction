@@ -18,5 +18,7 @@ public interface UserRepository {
     List<UserEntity> getAllUsers();
 
     Optional<UserEntity> findByName(String username);
+
+    void updateUserById(UserRegisterDto updatedUser);
 }
 

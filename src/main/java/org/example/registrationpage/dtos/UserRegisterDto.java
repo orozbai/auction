@@ -14,4 +14,5 @@ public class UserRegisterDto {
     private Integer age;
     private String password;
     private String email;
+    private Long id;
 }

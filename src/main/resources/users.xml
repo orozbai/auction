@@ -1,73 +1,74 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><users>
-                
+                    
+    
     
     
     <user>
-                                
+                                        
+        
         
         
         <id>2</id>
-                                
+                                        
+        
         
         
         <username>user</username>
-                                
+                                        
+        
         
         
         <password>$2a$10$PMz5Hhmx8RlVAShUFv5Jpe1cyUQVLsmaqaEZBituvmX600owKKe.K</password>
-                                
+                                        
+        
         
         
         <email>johsdn@example.com</email>
-                                
+                                        
+        
         
         
         <role>ROLE_ADMIN, ROLE_USER</role>
-                                
+                                        
+        
         
         
         <age>13</age>
-                            
+                                    
+    
     
     
     </user>
                 
     
+
+    
     
     <user>
-                                
+                        
         
+        <id>3</id>
+                        
         
-        <id>1</id>
-                                
+        <username>or</username>
+                        
         
+        <password>$2a$10$lx3gIrQuKCl.AifjC9RIneaGefuW7j0OJwVf/TXJopiifNLgApnfe</password>
+                        
         
-        <username>oroz</username>
-                                
+        <email>oay233@mail.ru</email>
+                        
         
-        
-        <password>$2a$10$VZMYvTjPx1.HuFPYbi2EROK7bqI7hD4zx3hKSCdh876ZTQdpatsuu</password>
-                                
-        
-        
-        <email>orozbay233@mail.ru</email>
-                                
-        
-        
-        <age>13</age>
-                                
-        
+        <age>14</age>
+                        
         
         <role>ROLE_ADMIN</role>
-                            
-    
+                    
     
     </user>
-            
+        
     
     
     
-    
-
     
 </users>
