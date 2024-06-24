@@ -1,54 +1,188 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <lots>
-
-
+                
+    
+    
     <lot>
-
-
+                                
+        
+        
         <id>1</id>
-
-
+                                
+        
+        
         <name>car</name>
-
-
+                                
+        
+        
         <description>cool car</description>
-
-
+                                
+        
+        
         <quantity>2</quantity>
-
-
+                                
+        
+        
         <price>100000</price>
-
-
+                            
+    
+    
     </lot>
-
-
+                
+    
+    
     <lot>
-
-
+                                
+        
+        
         <id>2</id>
-
-
-        <name>apple</name>
-
-
-        <description>red apples</description>
-
-
-        <quantity>100</quantity>
-
-
-        <price>1000</price>
-
-
-    </lot>
-
-
-    <lot>
-        <id>3</id>
+                                
+        
+        
         <name>mango</name>
+                                
+        
+        
         <description>big mango</description>
+                                
+        
+        
         <quantity>3</quantity>
+                                
+        
+        
         <price>13</price>
+                            
+    
+    
+    </lot>
+                
+    
+    
+    <lot>
+                                
+        
+        
+        <id>3</id>
+                                
+        
+        
+        <name>banana</name>
+                                
+        
+        
+        <description>big banana</description>
+                                
+        
+        
+        <quantity>32</quantity>
+                                
+        
+        
+        <price>133</price>
+                            
+    
+    
+    </lot>
+                
+    
+    
+    <lot>
+                                
+        
+        
+        <id>4</id>
+                                
+        
+        
+        <name>red mango</name>
+                                
+        
+        
+        <description>red mango</description>
+                                
+        
+        
+        <quantity>3111</quantity>
+                                
+        
+        
+        <price>13333</price>
+                            
+    
+    
+    </lot>
+                
+    
+    
+    <lot>
+                                
+        
+        
+        <id>5</id>
+                                
+        
+        
+        <name>apple</name>
+                                
+        
+        
+        <description>big apple</description>
+                                
+        
+        
+        <quantity>100</quantity>
+                                
+        
+        
+        <price>13</price>
+                            
+    
+    
+    </lot>
+            
+    
+    
+    <lot>
+                        
+        
+        <id>6</id>
+                        
+        
+        <name>phone</name>
+                        
+        
+        <description>cool phone</description>
+                        
+        
+        <quantity>1</quantity>
+                        
+        
+        <price>1888</price>
+                    
+    
+    </lot>
+        
+    
+    <lot>
+                
+        <id>7</id>
+                
+        <name>pc</name>
+                
+        <description>black</description>
+                
+        <quantity>1</quantity>
+                
+        <price>200</price>
+            
+    </lot>
+    
+    <lot>
+        <id>8</id>
+        <name>apple</name>
+        <description>red</description>
+        <quantity>1</quantity>
+        <price>123</price>
     </lot>
 </lots>

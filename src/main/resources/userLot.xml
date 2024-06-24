@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<lots>
+            
+    
+    <lot>
+                        
+        
+        <id>1</id>
+                        
+        
+        <userId>2</userId>
+                        
+        
+        <lotId>3</lotId>
+                    
+    
+    </lot>
+            
+    
+    <lot>
+                        
+        
+        <id>2</id>
+                        
+        
+        <userId>3</userId>
+                        
+        
+        <lotId>1</lotId>
+                    
+    
+    </lot>
+            
+    
+    <lot>
+                        
+        
+        <id>3</id>
+                        
+        
+        <userId>3</userId>
+                        
+        
+        <lotId>2</lotId>
+                    
+    
+    </lot>
+            
+    
+    <lot>
+                        
+        
+        <id>4</id>
+                        
+        
+        <userId>3</userId>
+                        
+        
+        <lotId>4</lotId>
+                    
+    
+    </lot>
+            
+    
+    <lot>
+                        
+        
+        <id>5</id>
+                        
+        
+        <userId>3</userId>
+                        
+        
+        <lotId>5</lotId>
+                    
+    
+    </lot>
+            
+    
+    <lot>
+                        
+        
+        <id>6</id>
+                        
+        
+        <userId>2</userId>
+                        
+        
+        <lotId>6</lotId>
+                    
+    
+    </lot>
+        
+    
+    <lot>
+                
+        <id>7</id>
+                
+        <userId>3</userId>
+                
+        <lotId>7</lotId>
+            
+    </lot>
+    
+    <lot>
+        <id>8</id>
+        <userId>2</userId>
+        <lotId>8</lotId>
+    </lot>
+</lots>

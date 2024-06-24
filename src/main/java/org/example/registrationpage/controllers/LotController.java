@@ -23,9 +23,9 @@ public class LotController {
         List<LotEntity> lots = lotService.getAllLots();
         model.addAttribute("lots", lots);
         if (lots != null) {
-            return new ResponseEntity<>("Lots successfully", HttpStatus.CREATED);
+            return new ResponseEntity<>(lots, HttpStatus.FOUND);
         } else {
-            return new ResponseEntity<>("Lots failed", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Lots not found", HttpStatus.BAD_REQUEST);
         }
     }
 

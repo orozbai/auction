@@ -32,4 +32,8 @@ public class UserService {
     public void updateUser(UserRegisterDto updatedUser) {
         userRepository.updateUserById(updatedUser);
     }
+
+    public Long getCurrentUserId() {
+        return userRepository.getCurrentUserId();
+    }
 }

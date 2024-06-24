@@ -16,5 +16,7 @@ public interface UserRepository {
     Optional<UserEntity> findByName(String username);
 
     void updateUserById(UserRegisterDto updatedUser);
+
+    Long getCurrentUserId();
 }
 

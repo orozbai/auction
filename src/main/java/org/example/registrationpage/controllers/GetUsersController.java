@@ -23,9 +23,9 @@ public class GetUsersController {
         List<UserEntity> users = userService.getAllUsers();
         model.addAttribute("users", users);
         if (users != null) {
-            return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
+            return new ResponseEntity<>(users, HttpStatus.FOUND);
         } else {
-            return new ResponseEntity<>("User registration failed", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Users not founded", HttpStatus.BAD_REQUEST);
         }
     }
 

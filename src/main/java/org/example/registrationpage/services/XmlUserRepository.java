@@ -3,6 +3,9 @@ package org.example.registrationpage.services;
 import org.example.registrationpage.dtos.UserRegisterDto;
 import org.example.registrationpage.entities.UserEntity;
 import org.example.registrationpage.repositories.UserRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -23,6 +26,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -176,7 +180,6 @@ public class XmlUserRepository implements UserRepository {
             NodeList userList = root.getElementsByTagName("user");
             for (int i = 0; i < userList.getLength(); i++) {
                 Element userElement = (Element) userList.item(i);
-                // Extract user data
                 String username = userElement.getElementsByTagName("username").item(0).getTextContent();
                 String email = userElement.getElementsByTagName("email").item(0).getTextContent();
                 String password = userElement.getElementsByTagName("password").item(0).getTextContent();
@@ -249,5 +252,26 @@ public class XmlUserRepository implements UserRepository {
         } catch (ParserConfigurationException | IOException | SAXException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public Long getCurrentUserId() {
+        String username = null;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+            if (principal instanceof UserDetails) {
+                username = ((UserDetails) principal).getUsername();
+
+            }
+        }
+        Long userId = null;
+        List<UserEntity> users = getAllUsers();
+        for (UserEntity user : users) {
+            if (Objects.equals(user.getName(), username)) {
+                userId = user.getId();
+            }
+        }
+        return userId;
     }
 }

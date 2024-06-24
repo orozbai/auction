@@ -49,10 +49,10 @@ public class RegistrationController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView logout(HttpServletRequest request, HttpServletResponse response) {
         SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
         logoutHandler.logout(request, response, SecurityContextHolder.getContext().getAuthentication());
-        return "redirect:/login";
+        return new ModelAndView("redirect:/login");
     }
 
     @GetMapping("/auc/welcome")
